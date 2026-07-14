@@ -12,6 +12,6 @@ if (-not $env:JOB_SOURCE_DROP_DIR) {
         $env:JOB_SOURCE_DROP_DIR = $defaultDrop
     }
 }
-python ..\validation\source_control_plane.py validate
+python ..\validation\source_registry_check.py
 python ..\validation\source_control_plane.py health --context local
 python ..\validation\source_control_plane.py collect-local --config .\config.example.json --sources $Sources
