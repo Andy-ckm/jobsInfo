@@ -1,0 +1,73 @@
+name: Job Source Contract and Health
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - "validation/**"
+      - "local_node/**"
+      - "config/target_companies.json"
+      - ".github/workflows/job-source-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install validation dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install requests pandas python-jobspy playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Validate P0/P1 executor contracts
+        run: python validation/source_registry_check.py
+
+      - name: Compile executor modules
+        run: |
+          python -m py_compile validation/source_runtime.py
+          python -m py_compile validation/source_control_plane.py
+          python -m py_compile local_node/collectors.py
+
+      - name: Generate cloud health matrix
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: |
+          mkdir -p artifacts/source-health
+          python validation/source_control_plane.py health --context cloud --output artifacts/source-health/cloud-health.json
+
+      - name: Run live source validation
+        env:
+          PYTHONUNBUFFERED: "1"
+          SMOKE_OUT: artifacts/job-source-smoke
+        run: python validation/job_source_smoke.py
+
+      - name: Run BOSS public read-only collection audit
+        env:
+          PYTHONUNBUFFERED: "1"
+          BOSS_OUT: artifacts/boss-public
+        run: python validation/boss_public_collect.py
+
+      - name: Upload source evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: job-source-control-plane-results
+          path: |
+            artifacts/source-health
+            artifacts/job-source-smoke
+            artifacts/boss-public
+          if-no-files-found: warn
+          retention-days: 14

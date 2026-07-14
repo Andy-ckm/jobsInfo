@@ -1,0 +1,16 @@
+{
+  "drop_dir": "",
+  "boss": {
+    "cities": ["苏州", "上海"],
+    "keywords": ["解决方案架构师", "云架构师", "Azure", "AI解决方案", "人工智能工程师", "RAG", "Agent", "身份安全", "零信任", "客户工程师", "售前架构师", "技术顾问", "数据架构师", "Forward Deployed Engineer", "FDE"],
+    "count": 30,
+    "delay_seconds": 3
+  },
+  "liepin": {
+    "cities": ["苏州", "上海"],
+    "keywords": ["解决方案架构师", "云架构师", "Azure", "AI解决方案", "人工智能工程师", "RAG", "Agent", "身份安全", "零信任", "客户工程师", "售前架构师", "技术顾问", "数据架构师", "Forward Deployed Engineer", "FDE"],
+    "headless": false,
+    "delay_seconds": 4,
+    "dom_limit": 60
+  }
+}

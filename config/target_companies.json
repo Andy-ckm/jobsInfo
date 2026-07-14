@@ -1,0 +1,16 @@
+{
+  "purpose": "Initial live probe targets for executor health. Downstream job qualification still enforces location and salary constraints.",
+  "official_careers": [
+    {"company": "Microsoft", "url": "https://jobs.careers.microsoft.com/global/en/search?q=Azure&lc=China"},
+    {"company": "Amazon Web Services", "url": "https://www.amazon.jobs/en/search?base_query=solutions+architect&loc_query=China"}
+  ],
+  "greenhouse": [{"company": "Anthropic", "token": "anthropic"}],
+  "lever": [{"company": "Palantir", "site": "palantir"}],
+  "smartrecruiters": [{"display_name": "SmartRecruiters", "company_id": "SmartRecruiters"}],
+  "company_sites": [
+    {"company": "Microsoft", "connector_type": "Official Careers", "url": "https://jobs.careers.microsoft.com/global/en/search?q=Azure&lc=China"},
+    {"company": "Amazon Web Services", "connector_type": "Official Careers", "url": "https://www.amazon.jobs/en/search?base_query=solutions+architect&loc_query=China"},
+    {"company": "NVIDIA", "connector_type": "Workday Careers", "url": "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite"},
+    {"company": "SAP", "connector_type": "SAP SuccessFactors Careers", "url": "https://jobs.sap.com/"}
+  ]
+}
